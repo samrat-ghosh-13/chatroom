@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "name": "Samrat Ghosh",
+      "password": "1234567890",
+      "email": "samratat@gmail.com"
+    },
+    {
+      "name": "Roshni Das",
+      "password": "1234567809",
+      "email": "roshnidas@gmail.com"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "message": "This is a test message of thread 1.asdasd jasjdfasdasd",
+      "author": "samratat@gmail.com",
+      "replies": [
+        {
+          "id": 0,
+          "author": "samratat@gmail.com",
+          "message": "Lol, I love this."
+        },
+        {
+          "id": 678,
+          "author": "samratat@gmail.com",
+          "message": "hgfhfghsdfsdfsdf"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "message": "This is a test message of thread 2. This is a test message of thread 2. This is a test message of thread 2. This is a test message of thread 2. This is a test message of thread 2.",
+      "author": "roshnidas@gmail.com",
+      "replies": [
+        {
+          "id": 904,
+          "author": "samratat@gmail.com",
+          "message": "LOLsd123123"
+        }
+      ]
+    }
+  ]
+}
