@@ -195,11 +195,11 @@ function ContentComponent() {
                 {item.replies.length === 0 ? (
                   <MessageBoardButton
                     data-tip={
-                      !signedIn && signedInUser?.author.length
+                      !signedIn && signedInUser?.author
                         ? "Please sign in to Reply"
                         : ""
                     }
-                    disabled={!signedIn && signedInUser?.author.length}
+                    disabled={!signedIn && signedInUser?.author}
                     onClick={() => handleMessageBoardClick(item)}
                   >
                     Reply
@@ -209,14 +209,14 @@ function ContentComponent() {
                 )}
                 <MessageBoardButton
                   data-tip={
-                    !signedIn && signedInUser?.author.length
+                    !signedIn && signedInUser?.author
                       ? "Please sign in to Edit threads"
                       : signedIn && signedInUser?.author !== item.author
                       ? "Only the Author can Edit threads"
                       : ""
                   }
                   disabled={
-                    (!signedIn && signedInUser?.author.length) ||
+                    (!signedIn && signedInUser?.author) ||
                     (signedIn && signedInUser?.author !== item.author)
                   }
                   onClick={() => handleEditThreadClick(item)}
@@ -225,14 +225,14 @@ function ContentComponent() {
                 </MessageBoardButton>
                 <MessageBoardButton
                   data-tip={
-                    !signedIn && signedInUser?.author.length
+                    !signedIn && signedInUser?.author
                       ? "Please sign in to Delete threads"
                       : signedIn && signedInUser?.author !== item.author
                       ? "Only the Author can Delete threads"
                       : ""
                   }
                   disabled={
-                    (!signedIn && signedInUser?.author.length) ||
+                    (!signedIn && signedInUser?.author) ||
                     (signedIn && signedInUser?.author !== item.author)
                   }
                   onClick={() => handleDeleteThreadClick(item)}
@@ -258,7 +258,7 @@ function ContentComponent() {
                         <MessageBoardButtonContainer>
                           <MessageBoardButton
                             data-tip={
-                              !signedIn && signedInUser?.author.length
+                              !signedIn && signedInUser?.author
                                 ? "Please sign in to Edit replies"
                                 : signedIn &&
                                   signedInUser?.author !== element.author
@@ -266,7 +266,7 @@ function ContentComponent() {
                                 : ""
                             }
                             disabled={
-                              (!signedIn && signedInUser?.author.length) ||
+                              (!signedIn && signedInUser?.author) ||
                               (signedIn && signedInUser?.author !== element.author)
                             }
                             onClick={() => handleEditReplyClick(item, element)}
@@ -275,7 +275,7 @@ function ContentComponent() {
                           </MessageBoardButton>
                           <MessageBoardButton
                             data-tip={
-                              !signedIn && signedInUser?.author.length
+                              !signedIn && signedInUser?.author
                                 ? "Please sign in to Delete replies"
                                 : signedIn &&
                                   signedInUser?.author !== element.author
@@ -283,7 +283,7 @@ function ContentComponent() {
                                 : ""
                             }
                             disabled={
-                              (!signedIn && signedInUser?.author.length) ||
+                              (!signedIn && signedInUser?.author) ||
                               (signedIn && signedInUser?.author !== element.author)
                             }
                             onClick={() =>
@@ -299,11 +299,11 @@ function ContentComponent() {
                   <MessageBoardButtonContainer>
                     <MessageBoardButton
                       data-tip={
-                        !signedIn && signedInUser?.author.length
+                        !signedIn && signedInUser?.author
                           ? "Please sign in to Reply"
                           : ""
                       }
-                      disabled={!signedIn && signedInUser?.author.length}
+                      disabled={!signedIn && signedInUser?.author}
                       onClick={() => handleMessageBoardClick(item)}
                     >
                       Reply
@@ -457,7 +457,7 @@ function ContentComponent() {
         type="check"
         label="check"
         handleClick={() => debounceAddThreadClick()}
-        disabled={!signedIn && signedInUser?.author.length}
+        disabled={!signedIn && signedInUser?.author}
       >
         <span>Add Thread</span>
       </ButtonComponent>
