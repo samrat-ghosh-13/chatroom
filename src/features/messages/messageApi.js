@@ -39,7 +39,7 @@ export const addMessages = async (data) => {
 };
 
 export const updateMessages = async (id, data) => {
-  await fetch(`${baseUrl}messages` + id, {
+  await fetch(`${baseUrl}messages/${id}`, {
     method: "PUT",
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
@@ -47,7 +47,7 @@ export const updateMessages = async (id, data) => {
 };
 
 export const deleteMessages = async (id) => {
-  await fetch(`${baseUrl}messages` + id, {
+  await fetch(`${baseUrl}messages${id}`, {
     method: "DELETE",
   });
 };

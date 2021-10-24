@@ -1,15 +1,24 @@
+// react and react dom
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import 'react-toastify/dist/ReactToastify.css';
+
+// redux store and provider
 import { store } from "./store/store";
 import { Provider } from "react-redux";
+
+// default service worker with CRA
 import * as serviceWorker from "./serviceWorker";
+
+// react router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // components
 import LoaderComponent from "./components/loader/Loader";
 import { ToastContainer } from "react-toastify";
+
+// styles
+import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // components on demand
 const HeaderComponent = lazy(() => import("./components/header/Header"));

@@ -24,6 +24,7 @@ import {
 import ButtonComponent from "../button/Button";
 import LoaderComponent from "../loader/Loader";
 import ModalComponent from "../modal/Modal.js";
+import ReactTooltip from "react-tooltip";
 
 // styles with styled components
 import styled from "styled-components";
@@ -193,6 +194,11 @@ function ContentComponent() {
               <MessageBoardButtonContainer>
                 {item.replies.length === 0 ? (
                   <MessageBoardButton
+                    data-tip={
+                      !signedIn && signedInUser?.author.length
+                        ? "Please sign in to Reply"
+                        : ""
+                    }
                     disabled={!signedIn && signedInUser?.author.length}
                     onClick={() => handleMessageBoardClick(item)}
                   >
@@ -202,13 +208,33 @@ function ContentComponent() {
                   <span>{item.replies.length} Comments</span>
                 )}
                 <MessageBoardButton
-                  disabled={!signedIn && signedInUser?.author.length}
+                  data-tip={
+                    !signedIn && signedInUser?.author.length
+                      ? "Please sign in to Edit threads"
+                      : signedIn && signedInUser?.author !== item.author
+                      ? "Only the Author can Edit threads"
+                      : ""
+                  }
+                  disabled={
+                    (!signedIn && signedInUser?.author.length) ||
+                    (signedIn && signedInUser?.author !== item.author)
+                  }
                   onClick={() => handleEditThreadClick(item)}
                 >
                   Edit Thread
                 </MessageBoardButton>
                 <MessageBoardButton
-                  disabled={!signedIn && signedInUser?.author.length}
+                  data-tip={
+                    !signedIn && signedInUser?.author.length
+                      ? "Please sign in to Delete threads"
+                      : signedIn && signedInUser?.author !== item.author
+                      ? "Only the Author can Delete threads"
+                      : ""
+                  }
+                  disabled={
+                    (!signedIn && signedInUser?.author.length) ||
+                    (signedIn && signedInUser?.author !== item.author)
+                  }
                   onClick={() => handleDeleteThreadClick(item)}
                 >
                   Delete Thread
@@ -231,13 +257,35 @@ function ContentComponent() {
                         </div>
                         <MessageBoardButtonContainer>
                           <MessageBoardButton
-                            disabled={!signedIn && signedInUser?.author.length}
+                            data-tip={
+                              !signedIn && signedInUser?.author.length
+                                ? "Please sign in to Edit replies"
+                                : signedIn &&
+                                  signedInUser?.author !== element.author
+                                ? "Only the Author can Edit replies"
+                                : ""
+                            }
+                            disabled={
+                              (!signedIn && signedInUser?.author.length) ||
+                              (signedIn && signedInUser?.author !== element.author)
+                            }
                             onClick={() => handleEditReplyClick(item, element)}
                           >
                             Edit
                           </MessageBoardButton>
                           <MessageBoardButton
-                            disabled={!signedIn && signedInUser?.author.length}
+                            data-tip={
+                              !signedIn && signedInUser?.author.length
+                                ? "Please sign in to Delete replies"
+                                : signedIn &&
+                                  signedInUser?.author !== element.author
+                                ? "Only the Author can Delete threads"
+                                : ""
+                            }
+                            disabled={
+                              (!signedIn && signedInUser?.author.length) ||
+                              (signedIn && signedInUser?.author !== element.author)
+                            }
                             onClick={() =>
                               handleDeleteReplyClick(item, element)
                             }
@@ -250,6 +298,11 @@ function ContentComponent() {
                   })}
                   <MessageBoardButtonContainer>
                     <MessageBoardButton
+                      data-tip={
+                        !signedIn && signedInUser?.author.length
+                          ? "Please sign in to Reply"
+                          : ""
+                      }
                       disabled={!signedIn && signedInUser?.author.length}
                       onClick={() => handleMessageBoardClick(item)}
                     >
@@ -306,7 +359,7 @@ function ContentComponent() {
           id: currentItem.id,
           value: textAreaContent,
           item: currentItem,
-          author: signedInUser?.author
+          author: signedInUser?.author,
         })
       );
       await dispatch(fetchMessagesAsync());
@@ -331,7 +384,7 @@ function ContentComponent() {
       await dispatch(
         addThreadAsync({
           message: textAreaContent,
-          author: signedInUser?.author
+          author: signedInUser?.author,
         })
       );
       await dispatch(fetchMessagesAsync());
@@ -404,11 +457,13 @@ function ContentComponent() {
         type="check"
         label="check"
         handleClick={() => debounceAddThreadClick()}
+        disabled={!signedIn && signedInUser?.author.length}
       >
         <span>Add Thread</span>
       </ButtonComponent>
       {Object.keys(messages).length ? showMessageBoards() : showPlaceholder()}
       {isModalOpen ? showModalComponent() : ""}
+      <ReactTooltip />
     </Content>
   );
 }

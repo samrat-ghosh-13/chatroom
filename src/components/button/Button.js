@@ -14,6 +14,9 @@ const Button = styled.button`
   margin-left: ${(props) => (props.type === "cancel" ? "0" : "16px")};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   background: ${(props) => (props.type === "cancel" ? "#000" : "#0000FF")};
+  :disabled {
+    opacity: 0.5;
+  }
 `;
 
 const Span = styled.span`

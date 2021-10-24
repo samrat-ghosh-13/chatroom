@@ -15,9 +15,9 @@ import {
 const initialState = {
   users: {},
   messages: {},
+  signedinUser: {},
   loading: false,
   signin: false,
-  signedinUser: {}
 };
 
 export const fetchMessagesAsync = createAsyncThunk(
@@ -198,7 +198,7 @@ export const messageSlice = createSlice({
     },
     signedinUser: (state, action) => {
       state.signedinUser = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
