@@ -22,6 +22,7 @@ import {
 
 // components
 import ButtonComponent from "../button/Button";
+import { toast } from "react-toastify";
 
 const Register = styled.div`
   position: fixed;
@@ -87,7 +88,7 @@ const RegisterComponent = () => {
 
   const handleSubmit = async () => {
     if (email in users) {
-      alert("You are already registered with us, please proceed to sign in.");
+      toast.warning("You are already registered with us, please proceed to sign in.");
       history.push("/signin");
     } else {
       await dispatch(

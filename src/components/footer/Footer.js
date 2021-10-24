@@ -9,7 +9,7 @@ const Footer = styled.footer`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 9999;
+  z-index: 999;
 `;
 
 const Div = styled.div`

@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import 'react-toastify/dist/ReactToastify.css';
 import { store } from "./store/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
@@ -8,6 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // components
 import LoaderComponent from "./components/loader/Loader";
+import { ToastContainer } from "react-toastify";
 
 // components on demand
 const HeaderComponent = lazy(() => import("./components/header/Header"));
@@ -21,6 +23,15 @@ ReactDOM.render(
     <Provider store={store}>
       <Router>
         <main className="app">
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnHover
+          />
           <Switch>
             <Route exact path="/">
               <Suspense fallback={<LoaderComponent />}>

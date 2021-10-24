@@ -1,5 +1,6 @@
 // redux toolkit
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 // api config
 import {
@@ -175,7 +176,7 @@ export const addUsersAsync = createAsyncThunk(
     try {
       const { user } = params;
       const response = await addUsers(user);
-      alert(
+      toast.success(
         "You have succesfully signed up, please proceed to the sign in page."
       );
       // The value we return becomes the `fulfilled` action payload
@@ -217,7 +218,7 @@ export const messageSlice = createSlice({
       })
       .addCase(fetchMessagesAsync.rejected, (state) => {
         state.loading = false;
-        alert("Unable to fetch messages, please try again later!");
+        toast.error("Unable to fetch messages, please try again later!");
       })
       .addCase(addThreadAsync.pending, (state) => {
         state.loading = true;
@@ -227,7 +228,7 @@ export const messageSlice = createSlice({
       })
       .addCase(addThreadAsync.rejected, (state) => {
         state.loading = false;
-        alert("Unable to add threads, please try again later!");
+        toast.error("Unable to add threads, please try again later!");
       })
       .addCase(editThreadAsync.pending, (state) => {
         state.loading = true;
@@ -237,7 +238,7 @@ export const messageSlice = createSlice({
       })
       .addCase(editThreadAsync.rejected, (state) => {
         state.loading = false;
-        alert("Unable to edit threads, please try again later!");
+        toast.error("Unable to edit threads, please try again later!");
       })
       .addCase(deleteThreadAsync.pending, (state) => {
         state.loading = true;
@@ -247,7 +248,7 @@ export const messageSlice = createSlice({
       })
       .addCase(deleteThreadAsync.rejected, (state) => {
         state.loading = false;
-        alert("Unable to delete threads, please try again later!");
+        toast.error("Unable to delete threads, please try again later!");
       })
       .addCase(addMessagesAsync.pending, (state) => {
         state.loading = true;
@@ -257,7 +258,7 @@ export const messageSlice = createSlice({
       })
       .addCase(addMessagesAsync.rejected, (state) => {
         state.loading = false;
-        alert("Unable to update messages, please try again later!");
+        toast.error("Unable to update messages, please try again later!");
       })
       .addCase(editMessagesAsync.pending, (state) => {
         state.loading = true;
@@ -267,7 +268,7 @@ export const messageSlice = createSlice({
       })
       .addCase(editMessagesAsync.rejected, (state) => {
         state.loading = false;
-        alert("Unable to edit messages, please try again later!");
+        toast.error("Unable to edit messages, please try again later!");
       })
       .addCase(deleteMessagesAsync.pending, (state) => {
         state.loading = true;
@@ -277,7 +278,7 @@ export const messageSlice = createSlice({
       })
       .addCase(deleteMessagesAsync.rejected, (state) => {
         state.loading = false;
-        alert("Unable to delete messages, please try again later!");
+        toast.error("Unable to delete messages, please try again later!");
       })
       .addCase(fetchUsersAsync.pending, (state) => {
         state.loading = true;
@@ -295,7 +296,7 @@ export const messageSlice = createSlice({
       })
       .addCase(fetchUsersAsync.rejected, (state) => {
         state.loading = false;
-        alert("Unable to fetch users, please try again later!");
+        toast.error("Unable to fetch users, please try again later!");
       })
       .addCase(addUsersAsync.pending, (state) => {
         state.loading = true;
@@ -305,7 +306,7 @@ export const messageSlice = createSlice({
       })
       .addCase(addUsersAsync.rejected, (state) => {
         state.loading = false;
-        alert("Unable to delete messages, please try again later!");
+        toast.error("Unable to delete messages, please try again later!");
       });
   },
 });

@@ -24,6 +24,7 @@ import {
 
 // components
 import ButtonComponent from "../button/Button";
+import { toast } from 'react-toastify';
 
 const Signin = styled.div`
   position: fixed;
@@ -93,8 +94,9 @@ const SigninComponent = () => {
         dispatch(signedinUser({
           author: email
         }));
+        toast.success("Signed in, Welcome to message board!");
       } else {
-        alert("The password is incorrect, please enter the right one!");
+        toast.error("The password is incorrect, please enter the right one!");
       }
     } else {
       history.push("/register");
