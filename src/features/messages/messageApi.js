@@ -47,7 +47,7 @@ export const updateMessages = async (id, data) => {
 };
 
 export const deleteMessages = async (id) => {
-  await fetch(`${baseUrl}messages${id}`, {
+  await fetch(`${baseUrl}messages/${id}`, {
     method: "DELETE",
   });
 };

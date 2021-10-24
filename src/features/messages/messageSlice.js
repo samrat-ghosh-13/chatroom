@@ -15,7 +15,9 @@ import {
 const initialState = {
   users: {},
   messages: {},
-  signedinUser: {},
+  signedinUser: {
+    author: ""
+  },
   loading: false,
   signin: false,
 };
