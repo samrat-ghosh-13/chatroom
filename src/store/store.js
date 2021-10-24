@@ -31,5 +31,5 @@ export const store = configureStore({
 store.subscribe(() => {
   // in case of fast state changes, the throttle function will reduce the overhead
   // by calling the local storage APIs in a given time interval
-  throttle(() => saveState(store.getState(), 1000));
+  throttle(saveState(store.getState()), 1000);
 });

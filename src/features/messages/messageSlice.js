@@ -5,8 +5,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   fetchUsers,
   addUsers,
-  updateUsers,
-  removeUsers,
   fetchMessages,
   addMessages,
   updateMessages,
@@ -17,6 +15,7 @@ const initialState = {
   users: {},
   messages: {},
   loading: false,
+  signin: false,
 };
 
 export const fetchMessagesAsync = createAsyncThunk(
@@ -169,10 +168,33 @@ export const fetchUsersAsync = createAsyncThunk(
   }
 );
 
+export const addUsersAsync = createAsyncThunk(
+  "messages/addUsers",
+  async (params, { rejectWithValue }) => {
+    try {
+      const { user } = params;
+      const response = await addUsers(user);
+      alert(
+        "You have succesfully signed up, please proceed to the sign in page."
+      );
+      // The value we return becomes the `fulfilled` action payload
+      return response;
+    } catch (err) {
+      // Use `err.response.data` as `action.payload` for a `rejected` action,
+      // by explicitly returning it using the `rejectWithValue()` utility
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const messageSlice = createSlice({
   name: "message",
   initialState,
-  reducers: {},
+  reducers: {
+    signedin: (state, action) => {
+      state.signin = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMessagesAsync.pending, (state) => {
@@ -270,17 +292,29 @@ export const messageSlice = createSlice({
       .addCase(fetchUsersAsync.rejected, (state) => {
         state.loading = false;
         alert("Unable to fetch users, please try again later!");
+      })
+      .addCase(addUsersAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addUsersAsync.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addUsersAsync.rejected, (state) => {
+        state.loading = false;
+        alert("Unable to delete messages, please try again later!");
       });
   },
 });
 
 // exports the actions
-export const {} = messageSlice.actions;
+export const { signedin } = messageSlice.actions;
 
 export const getMessages = (state) => state.message.messages;
 
 export const getUsers = (state) => state.message.users;
 
 export const getLoadingState = (state) => state.message.loading;
+
+export const getSigninState = (state) => state.message.signin;
 
 export default messageSlice.reducer;

@@ -1,6 +1,24 @@
 // styled components
 import styled from "styled-components";
 
+// redux
+import { useSelector, useDispatch } from "react-redux";
+
+// react router
+import { useHistory } from "react-router-dom";
+
+// redux actions and selectors
+import {
+  getSigninState,
+  signedin,
+} from "../../features/messages/messageSlice.js";
+
+// components
+import ButtonComponent from "../button/Button";
+
+// utils
+import { debounce } from "../../utils/utils";
+
 // css with styled components
 const Header = styled.header`
   background: #f7f7f7;
@@ -16,7 +34,7 @@ const Header = styled.header`
 
 const Contents = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   height: inherit;
   padding: 0 24px;
@@ -28,7 +46,11 @@ const ContentsLeft = styled.div`
   cursor: pointer;
   text-transform: uppercase;
   font-weight: 700;
-  color: #0000FF;
+  color: #0000ff;
+`;
+
+const ContentsRight = styled.div`
+  display: flex;
 `;
 
 /**
@@ -37,6 +59,26 @@ const ContentsLeft = styled.div`
  * @returns header component
  */
 const HeaderComponent = () => {
+  const signedIn = useSelector(getSigninState);
+
+  // instantiating dispatch
+  const dispatch = useDispatch();
+
+  // instantiating history
+  const history = useHistory();
+
+  const handleSignOut = () => {
+    dispatch(signedin(false));
+  };
+
+  const handleSignIn = () => {
+    history.push("/signin");
+  };
+
+  const handleRegister = () => {
+    history.push("/register");
+  };
+
   return (
     <article>
       <Header className="app__header" data-testid="app__header">
@@ -45,10 +87,36 @@ const HeaderComponent = () => {
             className="app__header__contents__left"
             onClick={() => console.log("/")}
           >
-            <p className="app__header__contents__left__text">
-              Message Boards
-            </p>
+            <p className="app__header__contents__left__text">Message Boards</p>
           </ContentsLeft>
+          <ContentsRight>
+            {signedIn ? (
+              <ButtonComponent
+                type="cancel"
+                label="Sign Out"
+                handleClick={() => debounce(handleSignOut(), 500)}
+              >
+                <span>Sign out</span>
+              </ButtonComponent>
+            ) : (
+              <>
+                <ButtonComponent
+                  type="cancel"
+                  label="Sign Out"
+                  handleClick={() => debounce(handleSignIn(), 500)}
+                >
+                  <span>Sign in</span>
+                </ButtonComponent>
+                <ButtonComponent
+                  type="check"
+                  label="Register"
+                  handleClick={() => debounce(handleRegister(), 500)}
+                >
+                  <span>Register</span>
+                </ButtonComponent>
+              </>
+            )}
+          </ContentsRight>
         </Contents>
       </Header>
     </article>

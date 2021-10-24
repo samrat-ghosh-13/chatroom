@@ -1,5 +1,7 @@
+const baseUrl = "http://localhost:8000/";
+
 export const fetchUsers = async () => {
-  const users = await fetch("http://localhost:8000/users")
+  const users = await fetch(`${baseUrl}users`)
     .then((response) => {
       return response.json();
     })
@@ -10,29 +12,15 @@ export const fetchUsers = async () => {
 };
 
 export const addUsers = async (data) => {
-  await fetch("http://localhost:8000/users", {
+  await fetch(`${baseUrl}users`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
   });
 };
 
-export const updateUsers = async (id, data) => {
-  await fetch("http://localhost:8000/users" + id, {
-    method: "PUT",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" },
-  });
-};
-
-export const removeUsers = async (id) => {
-  await fetch("http://localhost:8000/users" + id, {
-    method: "DELETE",
-  });
-};
-
 export const fetchMessages = async () => {
-  const messages = await fetch("http://localhost:8000/messages")
+  const messages = await fetch(`${baseUrl}messages`)
     .then((response) => {
       return response.json();
     })
@@ -43,7 +31,7 @@ export const fetchMessages = async () => {
 };
 
 export const addMessages = async (data) => {
-  await fetch("http://localhost:8000/messages", {
+  await fetch(`${baseUrl}messages`, {
     method: "POST",
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
@@ -51,7 +39,7 @@ export const addMessages = async (data) => {
 };
 
 export const updateMessages = async (id, data) => {
-  await fetch("http://localhost:8000/messages/" + id, {
+  await fetch(`${baseUrl}messages` + id, {
     method: "PUT",
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
@@ -59,7 +47,7 @@ export const updateMessages = async (id, data) => {
 };
 
 export const deleteMessages = async (id) => {
-  await fetch("http://localhost:8000/messages/" + id, {
+  await fetch(`${baseUrl}messages` + id, {
     method: "DELETE",
   });
 };
