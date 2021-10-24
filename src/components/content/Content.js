@@ -15,7 +15,8 @@ import {
   deleteThreadAsync,
   fetchUsersAsync,
   getMessages,
-  getUsers,
+  getSigninState,
+  getSigninUserState,
   getLoadingState,
 } from "../../features/messages/messageSlice.js";
 
@@ -84,6 +85,9 @@ const MessageBoardButton = styled.button`
   cursor: pointer;
   padding: 16px;
   font-size: 14px;
+  :disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const ModalContents = styled.div`
@@ -126,9 +130,10 @@ function ContentComponent() {
   const [currentItem, setCurrentItem] = useState({});
   const [currentReply, setCurrentReply] = useState({});
   const [type, setType] = useState("");
-  const users = useSelector(getUsers);
   const messages = useSelector(getMessages);
   const isLoading = useSelector(getLoadingState);
+  const signedIn = useSelector(getSigninState);
+  const signedInUser = useSelector(getSigninUserState);
 
   // instantiating dispatch
   const dispatch = useDispatch();
@@ -188,6 +193,7 @@ function ContentComponent() {
               <MessageBoardButtonContainer>
                 {item.replies.length === 0 ? (
                   <MessageBoardButton
+                    disabled={!signedIn && signedInUser?.author.length}
                     onClick={() => handleMessageBoardClick(item)}
                   >
                     Reply
@@ -195,10 +201,14 @@ function ContentComponent() {
                 ) : (
                   <span>{item.replies.length} Comments</span>
                 )}
-                <MessageBoardButton onClick={() => handleEditThreadClick(item)}>
+                <MessageBoardButton
+                  disabled={!signedIn && signedInUser?.author.length}
+                  onClick={() => handleEditThreadClick(item)}
+                >
                   Edit Thread
                 </MessageBoardButton>
                 <MessageBoardButton
+                  disabled={!signedIn && signedInUser?.author.length}
                   onClick={() => handleDeleteThreadClick(item)}
                 >
                   Delete Thread
@@ -221,11 +231,13 @@ function ContentComponent() {
                         </div>
                         <MessageBoardButtonContainer>
                           <MessageBoardButton
+                            disabled={!signedIn && signedInUser?.author.length}
                             onClick={() => handleEditReplyClick(item, element)}
                           >
                             Edit
                           </MessageBoardButton>
                           <MessageBoardButton
+                            disabled={!signedIn && signedInUser?.author.length}
                             onClick={() =>
                               handleDeleteReplyClick(item, element)
                             }
@@ -238,6 +250,7 @@ function ContentComponent() {
                   })}
                   <MessageBoardButtonContainer>
                     <MessageBoardButton
+                      disabled={!signedIn && signedInUser?.author.length}
                       onClick={() => handleMessageBoardClick(item)}
                     >
                       Reply
@@ -293,6 +306,7 @@ function ContentComponent() {
           id: currentItem.id,
           value: textAreaContent,
           item: currentItem,
+          author: signedInUser?.author
         })
       );
       await dispatch(fetchMessagesAsync());
@@ -317,6 +331,7 @@ function ContentComponent() {
       await dispatch(
         addThreadAsync({
           message: textAreaContent,
+          author: signedInUser?.author
         })
       );
       await dispatch(fetchMessagesAsync());

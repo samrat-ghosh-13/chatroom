@@ -16,6 +16,7 @@ const initialState = {
   messages: {},
   loading: false,
   signin: false,
+  signedinUser: {}
 };
 
 export const fetchMessagesAsync = createAsyncThunk(
@@ -37,9 +38,9 @@ export const addThreadAsync = createAsyncThunk(
   "messages/addThreads",
   async (params, { rejectWithValue }) => {
     try {
-      const { message } = params;
+      const { message, author } = params;
       await addMessages({
-        author: "samratat@gmail.com",
+        author: author,
         message: message,
         replies: [],
       });
@@ -83,7 +84,7 @@ export const addMessagesAsync = createAsyncThunk(
   "messages/addMessages",
   async (params, { rejectWithValue }) => {
     try {
-      let { id, value, item } = params;
+      let { id, value, item, author } = params;
       let replies = [...item.replies];
       if (value.length) {
         replies = [
@@ -91,7 +92,7 @@ export const addMessagesAsync = createAsyncThunk(
           {
             id: Math.floor(Math.random() * 1000),
             message: value,
-            author: "samratat@gmail.com",
+            author: author,
           },
         ];
       }
@@ -194,6 +195,9 @@ export const messageSlice = createSlice({
     signedin: (state, action) => {
       state.signin = action.payload;
     },
+    signedinUser: (state, action) => {
+      state.signedinUser = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -307,7 +311,7 @@ export const messageSlice = createSlice({
 });
 
 // exports the actions
-export const { signedin } = messageSlice.actions;
+export const { signedin, signedinUser } = messageSlice.actions;
 
 export const getMessages = (state) => state.message.messages;
 
@@ -316,5 +320,7 @@ export const getUsers = (state) => state.message.users;
 export const getLoadingState = (state) => state.message.loading;
 
 export const getSigninState = (state) => state.message.signin;
+
+export const getSigninUserState = (state) => state.message.signedinUser;
 
 export default messageSlice.reducer;

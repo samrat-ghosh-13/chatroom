@@ -18,6 +18,7 @@ import {
   getUsers,
   fetchUsersAsync,
   signedin,
+  signedinUser,
   getSigninState,
 } from "../../features/messages/messageSlice.js";
 
@@ -89,6 +90,9 @@ const SigninComponent = () => {
       if (users[email].email === email && users[email].password) {
         history.push("/");
         dispatch(signedin(true));
+        dispatch(signedinUser({
+          author: email
+        }));
       } else {
         alert("The password is incorrect, please enter the right one!");
       }
