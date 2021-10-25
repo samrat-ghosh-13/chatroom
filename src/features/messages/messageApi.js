@@ -1,4 +1,4 @@
-const baseUrl = "https://my-json-server.typicode.com/samrat-ghosh-13/json-server/";
+const baseUrl = "http://localhost:8000/";
 
 export const fetchUsers = async () => {
   const users = await fetch(`${baseUrl}users`)

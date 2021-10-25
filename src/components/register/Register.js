@@ -33,10 +33,7 @@ const Register = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 1240px;
-  margin: 0 auto;
-  margin-top: 80px;
-  padding: 24px;
+  background: inherit;
 `;
 
 const RegisterContainer = styled.div`
@@ -52,18 +49,42 @@ const RegisterContainer = styled.div`
 const Name = styled.div`
   display: flex;
   flex-direction: column;
+  & input {
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    :focus {
+      border: 0.5px solid #e74c3c;
+    }
+  }
 `;
 
 const Email = styled.div`
   display: flex;
   flex-direction: column;
   margin: 16px 0;
+  & input {
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    :focus {
+      border: 0.5px solid #e74c3c;
+    }
+  }
 `;
 
 const Password = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
+  & input {
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    :focus {
+      border: 0.5px solid #e74c3c;
+    }
+  }
 `;
 
 const RegisterComponent = () => {

@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import {
   getSigninState,
   signedin,
+  signedinUser,
 } from "../../features/messages/messageSlice.js";
 
 // components
@@ -69,6 +70,11 @@ const HeaderComponent = () => {
 
   const handleSignOut = () => {
     dispatch(signedin(false));
+    dispatch(
+      signedinUser({
+        author: "",
+      })
+    );
   };
 
   const handleSignIn = () => {

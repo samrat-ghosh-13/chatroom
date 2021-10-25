@@ -41,6 +41,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-bottom: 40px;
 `;
 
 const MessageBoardContainer = styled.div`

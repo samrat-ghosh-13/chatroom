@@ -24,7 +24,7 @@ import {
 
 // components
 import ButtonComponent from "../button/Button";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const Signin = styled.div`
   position: fixed;
@@ -35,10 +35,7 @@ const Signin = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 1240px;
-  margin: 0 auto;
-  margin-top: 80px;
-  padding: 24px;
+  background: inherit;
 `;
 
 const SigninContainer = styled.div`
@@ -54,12 +51,29 @@ const SigninContainer = styled.div`
 const Email = styled.div`
   display: flex;
   flex-direction: column;
+
+  & input {
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    :focus {
+      border: 0.5px solid #e74c3c;
+    }
+  }
 `;
 
 const Password = styled.div`
   display: flex;
   flex-direction: column;
   margin: 16px 0;
+  & input {
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    :focus {
+      border: 0.5px solid #e74c3c;
+    }
+  }
 `;
 
 const SignedInMessage = styled.div`
@@ -91,9 +105,11 @@ const SigninComponent = () => {
       if (users[email].email === email && users[email].password) {
         history.push("/");
         dispatch(signedin(true));
-        dispatch(signedinUser({
-          author: email
-        }));
+        dispatch(
+          signedinUser({
+            author: email,
+          })
+        );
         toast.success("Signed in, Welcome to message board!");
       } else {
         toast.error("The password is incorrect, please enter the right one!");
@@ -147,6 +163,7 @@ const SigninComponent = () => {
           <ButtonComponent
             type="check"
             label="Submit"
+            disabled={email.length === 0 || password.length === 0}
             handleClick={() => debounce(handleSubmit(), 500)}
           >
             <span>Submit</span>
