@@ -28,6 +28,7 @@
     "build": "react-scripts build",
     "test": "npx cypress run-ct",
     "test:headless": "npx cypress open-ct",
+    "test:e2e": "yarn run cypress open",
     "eject": "react-scripts eject",
     "server": "npx json-server --watch src/data/db.json --port 8000"
   },
