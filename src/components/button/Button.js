@@ -10,12 +10,15 @@ const Button = styled.button`
   border-radius: 40px;
   padding: 8px;
   color: #fff;
-  width: 160px;
+  width: 80px;
   margin-left: ${(props) => (props.type === "cancel" ? "0" : "16px")};
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   background: ${(props) => (props.type === "cancel" ? "#000" : "#0000FF")};
   :disabled {
     opacity: 0.5;
+  }
+  @media (min-width: 500px) {
+    width: 160px;
   }
 `;
 
