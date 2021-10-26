@@ -1,8 +1,36 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Message Board Application
 
-## Available Scripts
+## Experience
+
+The challenge was quite exciting because of the following reasons
+- Using redux toolkit for the second time (first time - https://github.com/samrat-ghosh-13/image-approval-application/, I was aware of flux pattern and used the same in Vue with Vuex. Previously worked with context API.
+- Using styled components for the second time, previously worked with CSS, SCSS. Really liked the CSS in JS solution, my new favorite.
+- Using Fake JSON Server to fetch Data.
+
+## Tech Stack
+
+- React
+- Redux using redux toolkit
+- Styled Components
+- Cypress
+- Fetch API
+- GitHub Actions for running the test cases post commit on "main" branch
+- Deployment using vercel at https://chatroom-tau.vercel.app/ (using deploy branch - https://github.com/samrat-ghosh-13/chatroom/tree/deploy) and fake JSON Server is hosted at "https://my-json-server.typicode.com/samrat-ghosh-13/json-server/". Use any user from db.json file, the changes are not persisted as JSON Server cannot accomodate that
 
 In the project directory, you can run:
+
+# Available Scripts
+
+## For running the app in local
+
+use `yarn start` and `yarn server` in two different terminal windows.
+
+## For testing the app in local
+
+use `yarn start` and `yarn server` in two different terminal windows and - 
+- `yarn test` for running the tests in terminal
+- `yarn test:headless` for running the tests in headless browser
+- `yarn test:e2e` for running the End to End test cases
 
 ### `yarn start`
 
@@ -12,10 +40,19 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
+### `yarn server`
+
+use yarn server to start the Fake JSON Server to fetch the data from the API Endpoints, which in turn fetch data from db.json
+Runs the JSON server in the development mode.<br />
+Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
+
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+use yarn test to do unit testing of the components and the reducers using cypress.io
+
+### `yarn test:e2e`
+
+use yarn test:e2e to do end to end testing using cypress.io
 
 ### `yarn build`
 
@@ -37,8 +74,8 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## What can be improved? 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- using color variables
+- using margin, spacing variables
+- using constants to store the static texts, that can support multiple languages
