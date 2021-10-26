@@ -60,6 +60,7 @@ const ContentsRight = styled.div`
  * @returns header component
  */
 const HeaderComponent = () => {
+  // gets the states from the store
   const signedIn = useSelector(getSigninState);
 
   // instantiating dispatch
@@ -68,6 +69,11 @@ const HeaderComponent = () => {
   // instantiating history
   const history = useHistory();
 
+  /**
+   * @name handleSignOut
+   * @desciption dispatches the signout action that logs out the current user
+   * @returns none
+   */
   const handleSignOut = () => {
     dispatch(signedin(false));
     dispatch(
@@ -77,10 +83,20 @@ const HeaderComponent = () => {
     );
   };
 
+  /**
+   * @name handleSignIn
+   * @desciption redirects the user based on selection to sign in
+   * @returns none
+   */
   const handleSignIn = () => {
     history.push("/signin");
   };
 
+  /**
+   * @name handleRegister
+   * @desciption redirects the user based on selection to register
+   * @returns none
+   */
   const handleRegister = () => {
     history.push("/register");
   };

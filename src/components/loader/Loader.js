@@ -1,6 +1,7 @@
 // styles with styled components
 import styled from "styled-components";
 
+// css with styled components
 const Mask = styled.div`
   position: fixed;
   z-index: 9999;

@@ -32,6 +32,7 @@ import styled from "styled-components";
 // utils
 import { debounce } from "../../utils/utils";
 
+// css with styled components - start
 const Content = styled.div`
   max-width: 1240px;
   margin: 0 auto;
@@ -125,13 +126,21 @@ const Placeholder = styled.div`
   max-width: 1240px;
   margin: auto;
 `;
+// css with styled components - end
 
+/**
+ * @name ContentComponent
+ * @description method to create the content component
+ * @returns content component
+ */
 function ContentComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [textAreaContent, setTextAreaContent] = useState("");
   const [currentItem, setCurrentItem] = useState({});
   const [currentReply, setCurrentReply] = useState({});
   const [type, setType] = useState("");
+
+  // gets the states from the store
   const messages = useSelector(getMessages);
   const isLoading = useSelector(getLoadingState);
   const signedIn = useSelector(getSigninState);
@@ -140,21 +149,43 @@ function ContentComponent() {
   // instantiating dispatch
   const dispatch = useDispatch();
 
+  /**
+   * @name fetchData
+   * @description is used to trigger the fetchMessagesAsync, fetchUsersAsync dispatch to fetches the messages & users from fake server
+   * @returns none
+   */
   const fetchData = async () => {
     await dispatch(fetchMessagesAsync());
     await dispatch(fetchUsersAsync());
   };
 
+  /**
+   * @name useEffect
+   * @description runs only for the first time on re-render
+   */
   useEffect(() => {
     fetchData();
   }, []);
 
+  /**
+   * @name handleMessageBoardClick
+   * @param item
+   * @desciption opens the modal and sets the type as reply and currentItem with the passed item so that the same modal can be used based on validations
+   * @returns none
+   */
   const handleMessageBoardClick = (item) => {
     setType("reply");
     setCurrentItem(item);
     setIsModalOpen(true);
   };
 
+  /**
+   * @name handleEditReplyClick
+   * @param item
+   * @param element
+   * @desciption opens the modal and sets the type as edit-reply and currentItem with the passed item and currentElement with the passed element so that the same modal can be used based on validations
+   * @returns none
+   */
   const handleEditReplyClick = (item, element) => {
     setType("edit-reply");
     setCurrentItem(item);
@@ -163,11 +194,24 @@ function ContentComponent() {
     setIsModalOpen(true);
   };
 
+  /**
+   * @name handleDeleteReplyClick
+   * @param item
+   * @param element
+   * @desciption deletes the reply from each message threads
+   * @returns none
+   */
   const handleDeleteReplyClick = async (item, element) => {
     await dispatch(deleteMessagesAsync({ item, element }));
     await dispatch(fetchMessagesAsync());
   };
 
+  /**
+   * @name handleDeleteReplyClick
+   * @param item
+   * @desciption opens the modal and sets the type as edit-thread and currentItem with the passed item so that the same modal can be used based on validations
+   * @returns none
+   */
   const handleEditThreadClick = async (item) => {
     setType("edit-thread");
     setCurrentItem(item);
@@ -175,11 +219,139 @@ function ContentComponent() {
     setIsModalOpen(true);
   };
 
+  /**
+   * @name handleDeleteReplyClick
+   * @param item
+   * @desciption deletes the threads
+   * @returns none
+   */
   const handleDeleteThreadClick = async (item) => {
     await dispatch(deleteThreadAsync({ item }));
     await dispatch(fetchMessagesAsync());
   };
 
+  /**
+   * @name handleModalOutsideClick
+   * @param value
+   * @desciption closes the model and resets the state of the internal component
+   * @returns none
+   */
+  const handleModalOutsideClick = (value) => {
+    setIsModalOpen(value);
+    setTextAreaContent("");
+    setCurrentItem({});
+    setCurrentReply({});
+  };
+
+  /**
+   * @name debounceRejectedClick
+   * @desciption uses the debounce utility method to aggregate the outside of modal clicks and reject button click to handleModalOutsideClick
+   * @returns none
+   */
+  const debounceRejectedClick = debounce(
+    () => handleModalOutsideClick(false),
+    500
+  );
+
+  /**
+   * @name handleTextAreaChange
+   * @param value
+   * @desciption updates the state textAreaContent with the passed value from text input
+   * @returns none
+   */
+  const handleTextAreaChange = ({ target: { value } }) => {
+    setTextAreaContent(value);
+  };
+
+  /**
+   * @name handleSave
+   * @desciption gets triggered from the modal approve button, based on the conditions dispatches actions to add reply, edit reply, edit thread, add thread
+   * @returns none
+   */
+  const handleSave = async () => {
+    if (type === "edit-reply") {
+      await dispatch(
+        editMessagesAsync({
+          item: currentItem,
+          element: {
+            id: currentReply.id,
+            author: currentReply.author,
+            message: textAreaContent,
+          },
+        })
+      );
+      await dispatch(fetchMessagesAsync());
+      setTextAreaContent("");
+      setCurrentItem({});
+      setCurrentReply({});
+      setIsModalOpen(false);
+    } else if (type === "reply") {
+      await dispatch(
+        addMessagesAsync({
+          id: currentItem.id,
+          value: textAreaContent,
+          item: currentItem,
+          author: signedInUser?.author,
+        })
+      );
+      await dispatch(fetchMessagesAsync());
+      setTextAreaContent("");
+      setCurrentItem({});
+      setIsModalOpen(false);
+    } else if (type === "edit-thread") {
+      await dispatch(
+        editThreadAsync({
+          item: {
+            ...currentItem,
+            message: textAreaContent,
+          },
+        })
+      );
+      await dispatch(fetchMessagesAsync());
+      setTextAreaContent("");
+      setCurrentItem({});
+      setCurrentReply({});
+      setIsModalOpen(false);
+    } else if (type === "add-thread") {
+      await dispatch(
+        addThreadAsync({
+          message: textAreaContent,
+          author: signedInUser?.author,
+        })
+      );
+      await dispatch(fetchMessagesAsync());
+      setTextAreaContent("");
+      setCurrentItem({});
+      setCurrentReply({});
+      setIsModalOpen(false);
+    }
+  };
+
+  /**
+   * @name debounceApprovedClick
+   * @desciption uses the debounce utility method to aggregate the approve of modal clicks to handleSave
+   * @returns none
+   */
+  const debounceApprovedClick = debounce(() => handleSave(), 500);
+
+  /**
+   * @name handleAddThread
+   * @desciption opens the modal to add new thread
+   * @returns none
+   */
+  const handleAddThread = () => {
+    setType("add-thread");
+    setIsModalOpen(true);
+  };
+
+  /**
+   * @name debounceAddThreadClick
+   * @desciption uses the debounce utility method to aggregate the add thread
+   * @returns none
+   */
+  const debounceAddThreadClick = debounce(() => handleAddThread(), 500);
+
+  // JSX for displaying message boards
   const showMessageBoards = () => {
     return (
       <MessageBoardContainer className="app__content__message">
@@ -210,7 +382,9 @@ function ContentComponent() {
                     Reply
                   </MessageBoardButton>
                 ) : (
-                  <span className="app__content__message__boards__buttons-c__comments">{item.replies.length} Comments</span>
+                  <span className="app__content__message__boards__buttons-c__comments">
+                    {item.replies.length} Comments
+                  </span>
                 )}
                 <MessageBoardButton
                   data-tip={
@@ -329,96 +503,10 @@ function ContentComponent() {
     );
   };
 
-  const handleModalOutsideClick = (value) => {
-    setIsModalOpen(value);
-    setTextAreaContent("");
-    setCurrentItem({});
-    setCurrentReply({});
-  };
-
-  const handleTextAreaChange = ({ target: { value } }) => {
-    setTextAreaContent(value);
-  };
-
-  const debounceRejectedClick = debounce(
-    () => handleModalOutsideClick(false),
-    500
-  );
-
-  const handleSave = async () => {
-    if (type === "edit-reply") {
-      await dispatch(
-        editMessagesAsync({
-          item: currentItem,
-          element: {
-            id: currentReply.id,
-            author: currentReply.author,
-            message: textAreaContent,
-          },
-        })
-      );
-      await dispatch(fetchMessagesAsync());
-      setTextAreaContent("");
-      setCurrentItem({});
-      setCurrentReply({});
-      setIsModalOpen(false);
-    } else if (type === "reply") {
-      await dispatch(
-        addMessagesAsync({
-          id: currentItem.id,
-          value: textAreaContent,
-          item: currentItem,
-          author: signedInUser?.author,
-        })
-      );
-      await dispatch(fetchMessagesAsync());
-      setTextAreaContent("");
-      setCurrentItem({});
-      setIsModalOpen(false);
-    } else if (type === "edit-thread") {
-      await dispatch(
-        editThreadAsync({
-          item: {
-            ...currentItem,
-            message: textAreaContent,
-          },
-        })
-      );
-      await dispatch(fetchMessagesAsync());
-      setTextAreaContent("");
-      setCurrentItem({});
-      setCurrentReply({});
-      setIsModalOpen(false);
-    } else if (type === "add-thread") {
-      await dispatch(
-        addThreadAsync({
-          message: textAreaContent,
-          author: signedInUser?.author,
-        })
-      );
-      await dispatch(fetchMessagesAsync());
-      setTextAreaContent("");
-      setCurrentItem({});
-      setCurrentReply({});
-      setIsModalOpen(false);
-    }
-  };
-
-  const debounceApprovedClick = debounce(() => handleSave(), 500);
-
-  const handleAddThread = () => {
-    setType("add-thread");
-    setIsModalOpen(true);
-  };
-
-  const debounceAddThreadClick = debounce(() => handleAddThread(), 500);
-
+  // JSX for modals
   const showModalComponent = () => {
     return (
-      <ModalComponent
-        open={isModalOpen}
-        handleClick={() => handleModalOutsideClick()}
-      >
+      <ModalComponent handleClick={() => handleModalOutsideClick()}>
         <ModalContents>
           <label htmlFor="reply">Comment:</label>
           <textarea
@@ -451,6 +539,7 @@ function ContentComponent() {
     );
   };
 
+  // JSX placeholders
   const showPlaceholder = () => {
     return (
       <Placeholder>

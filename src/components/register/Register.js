@@ -24,6 +24,7 @@ import {
 import ButtonComponent from "../button/Button";
 import { toast } from "react-toastify";
 
+// css with styled components
 const Register = styled.div`
   position: fixed;
   top: 0;
@@ -91,6 +92,8 @@ const RegisterComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+
+  // gets the states from the store
   const users = useSelector(getUsers);
 
   // instantiating dispatch
@@ -99,14 +102,28 @@ const RegisterComponent = () => {
   // instantiating history
   const history = useHistory();
 
+  /**
+   * @name fetchData
+   * @description is used to trigger the fetchUsersAsync dispatch to fetches the users from fake server
+   * @returns none
+   */
   const fetchData = async () => {
     await dispatch(fetchUsersAsync());
   };
 
+  /**
+   * @name useEffect
+   * @description runs only for the first time on re-render
+   */
   useEffect(() => {
     fetchData();
   }, []);
 
+  /**
+   * @name handleSubmit
+   * @desciption based on the name, email, password input redirects the user to signin page
+   * @returns none
+   */
   const handleSubmit = async () => {
     if (email in users) {
       toast.warning(

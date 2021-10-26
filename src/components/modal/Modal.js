@@ -7,6 +7,7 @@ import { node, func } from "prop-types";
 // styled components
 import styled from "styled-components";
 
+// css with styled components
 const Mask = styled.div`
   position: fixed;
   z-index: 9999;
@@ -32,7 +33,8 @@ const Modal = styled.div`
 /**
  * @name ModalComponent
  * @description method to create the modal component
- * @param {*} isOpen
+ * @param {*} children
+ * @param {*} handleClick
  * @returns modal component
  */
 const ModalComponent = ({ children, handleClick }) => {

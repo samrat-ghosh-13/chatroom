@@ -26,6 +26,7 @@ import {
 import ButtonComponent from "../button/Button";
 import { toast } from "react-toastify";
 
+// css with styled components
 const Signin = styled.div`
   position: fixed;
   top: 0;
@@ -83,6 +84,8 @@ const SignedInMessage = styled.div`
 const SigninComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // gets the states from the store
   const users = useSelector(getUsers);
   const signedIn = useSelector(getSigninState);
 
@@ -92,14 +95,28 @@ const SigninComponent = () => {
   // instantiating history
   const history = useHistory();
 
+  /**
+   * @name fetchData
+   * @description is used to trigger the fetchUsersAsync dispatch to fetches the users from fake server
+   * @returns none
+   */
   const fetchData = async () => {
     await dispatch(fetchUsersAsync());
   };
 
+  /**
+   * @name useEffect
+   * @description runs only for the first time on re-render
+   */
   useEffect(() => {
     fetchData();
   }, []);
 
+  /**
+   * @name handleSubmit
+   * @desciption based on the email, password input redirects the user to dashboard or register page
+   * @returns none
+   */
   const handleSubmit = () => {
     if (email in users) {
       if (users[email].email === email && users[email].password) {
@@ -119,8 +136,18 @@ const SigninComponent = () => {
     }
   };
 
+  /**
+   * @name handleSignOut
+   * @desciption dispatches the signout action that logs out the current user
+   * @returns none
+   */
   const handleSignOut = () => {
     dispatch(signedin(false));
+    dispatch(
+      signedinUser({
+        author: "",
+      })
+    );
   };
 
   return (
