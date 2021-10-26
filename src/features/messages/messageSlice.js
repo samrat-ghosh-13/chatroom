@@ -16,7 +16,7 @@ const initialState = {
   users: {},
   messages: {},
   signedinUser: {
-    author: ""
+    author: "",
   },
   loading: false,
   signin: false,
@@ -191,6 +191,15 @@ export const addUsersAsync = createAsyncThunk(
   }
 );
 
+/**
+ * @name imageSlice
+ * @description The `reducers` field lets us define reducers and generate associated actions
+ * Redux Toolkit allows us to write "mutating" logic in reducers. It
+ * doesn't actually mutate the state because it uses the Immer library,
+ * which detects changes to a "draft state" and produces a brand new
+ * immutable state based off those changes
+ * @returns returns none explicitly, we have to export the following new state, actions, reducers that are below
+ */
 export const messageSlice = createSlice({
   name: "message",
   initialState,
@@ -201,6 +210,9 @@ export const messageSlice = createSlice({
     signedinUser: (state, action) => {
       state.signedinUser = action.payload;
     },
+    loadingState: (state, action) => {
+      state.loading = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -314,7 +326,7 @@ export const messageSlice = createSlice({
 });
 
 // exports the actions
-export const { signedin, signedinUser } = messageSlice.actions;
+export const { signedin, signedinUser, loadingState } = messageSlice.actions;
 
 export const getMessages = (state) => state.message.messages;
 

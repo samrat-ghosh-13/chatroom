@@ -5,7 +5,7 @@ import { mount } from "@cypress/react";
 import Loader from "./Loader";
 
 describe("unit testing of loader component", () => {
-  it("renders footer", () => {
+  it("renders loader", () => {
     mount(<Loader />);
     cy.get(".loader").should("exist");
     cy.get(".loader__bounce").should("exist");

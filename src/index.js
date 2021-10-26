@@ -27,45 +27,51 @@ const ContentComponent = lazy(() => import("./components/content/Content"));
 const SigninComponent = lazy(() => import("./components/signin/Signin"));
 const RegisterComponent = lazy(() => import("./components/register/Register"));
 
+const App = () => {
+  return (
+    <Router>
+      <main className="app">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnHover
+        />
+        <Switch>
+          <Route exact path="/">
+            <Suspense fallback={<LoaderComponent />}>
+              <HeaderComponent />
+              <ContentComponent />
+              <FooterComponent />
+            </Suspense>
+          </Route>
+          <Route path="/signin">
+            <Suspense fallback={<LoaderComponent />}>
+              <HeaderComponent />
+              <SigninComponent />
+              <FooterComponent />
+            </Suspense>
+          </Route>
+          <Route path="/register">
+            <Suspense fallback={<LoaderComponent />}>
+              <HeaderComponent />
+              <RegisterComponent />
+              <FooterComponent />
+            </Suspense>
+          </Route>
+        </Switch>
+      </main>
+    </Router>
+  );
+};
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <main className="app">
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnHover
-          />
-          <Switch>
-            <Route exact path="/">
-              <Suspense fallback={<LoaderComponent />}>
-                <HeaderComponent />
-                <ContentComponent />
-                <FooterComponent />
-              </Suspense>
-            </Route>
-            <Route path="/signin">
-              <Suspense fallback={<LoaderComponent />}>
-                <HeaderComponent />
-                <SigninComponent />
-                <FooterComponent />
-              </Suspense>
-            </Route>
-            <Route path="/register">
-              <Suspense fallback={<LoaderComponent />}>
-                <HeaderComponent />
-                <RegisterComponent />
-                <FooterComponent />
-              </Suspense>
-            </Route>
-          </Switch>
-        </main>
-      </Router>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

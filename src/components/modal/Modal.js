@@ -39,14 +39,16 @@ const ModalComponent = ({ children, handleClick }) => {
   const modalRef = useRef(null);
 
   const handleModalMaskClick = (e) => {
-    if (modalRef.current && !(modalRef.current.contains(e.target))) {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
       handleClick(false);
     }
   };
 
   return (
     <Mask className="modal" onClick={(e) => handleModalMaskClick(e)}>
-      <Modal ref={modalRef}>{children}</Modal>
+      <Modal className="modal__contents" ref={modalRef}>
+        {children}
+      </Modal>
     </Mask>
   );
 };

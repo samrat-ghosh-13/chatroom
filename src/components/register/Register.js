@@ -109,7 +109,9 @@ const RegisterComponent = () => {
 
   const handleSubmit = async () => {
     if (email in users) {
-      toast.warning("You are already registered with us, please proceed to sign in.");
+      toast.warning(
+        "You are already registered with us, please proceed to sign in."
+      );
       history.push("/signin");
     } else {
       await dispatch(
@@ -126,44 +128,54 @@ const RegisterComponent = () => {
   };
 
   return (
-    <Register>
-      <RegisterContainer>
-        <Name>
-          <label htmlFor="name">Name:</label>
+    <Register className="register">
+      <RegisterContainer className="register__c">
+        <Name className="register__c__name">
+          <label htmlFor="name" className="register__c__name__label">
+            Name:
+          </label>
           <input
             id="name"
             name="name"
             type="text"
             value={name}
             placeholder="Enter name"
+            className="register__c__name__input"
             onChange={(e) => setName(e.target.value)}
           ></input>
         </Name>
-        <Email>
-          <label htmlFor="email">Email:</label>
+        <Email className="register__c__email">
+          <label htmlFor="email" className="register__c__email__label">
+            Email:
+          </label>
           <input
             id="email"
             name="email"
             type="email"
             value={email}
             placeholder="Enter email"
+            className="register__c__email__input"
             onChange={(e) => setEmail(e.target.value)}
           ></input>
         </Email>
-        <Password>
-          <label htmlFor="reply">Password:</label>
+        <Password className="register__c__password">
+          <label htmlFor="reply" className="register__c__password__label">
+            Password:
+          </label>
           <input
             id="password"
             name="password"
             type="password"
             value={password}
             placeholder="Enter password"
+            className="register__c__password__input"
             onChange={(e) => setPassword(e.target.value)}
           ></input>
         </Password>
         <ButtonComponent
           type="check"
           label="Submit"
+          className="register__c__submit"
           disabled={
             email.length === 0 || password.length === 0 || name.length === 0
           }

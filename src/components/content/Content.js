@@ -23,7 +23,7 @@ import {
 // components
 import ButtonComponent from "../button/Button";
 import LoaderComponent from "../loader/Loader";
-import ModalComponent from "../modal/Modal.js";
+import ModalComponent from "../modal/Modal";
 import ReactTooltip from "react-tooltip";
 
 // styles with styled components
@@ -182,19 +182,23 @@ function ContentComponent() {
 
   const showMessageBoards = () => {
     return (
-      <MessageBoardContainer className="app__content__message-boards">
+      <MessageBoardContainer className="app__content__message">
         {Object.values(messages).map((item) => {
           return (
-            <MessageBoards key={item.id}>
-              <MessageBoardPostedBy>
+            <MessageBoards
+              className="app__content__message__boards"
+              key={item.id}
+            >
+              <MessageBoardPostedBy className="app__content__message__boards__postedby">
                 <span>posted by {item.author}</span>
               </MessageBoardPostedBy>
-              <MessageBoardContent>
+              <MessageBoardContent className="app__content__message__boards__content">
                 <span>{item.message}</span>
               </MessageBoardContent>
-              <MessageBoardButtonContainer>
+              <MessageBoardButtonContainer className="app__content__message__boards__buttons-c">
                 {item.replies.length === 0 ? (
                   <MessageBoardButton
+                    className="app__content__message__boards__buttons-c__reply-button"
                     data-tip={
                       !signedIn && signedInUser.author.length === 0
                         ? "Please sign in to Reply"
@@ -206,7 +210,7 @@ function ContentComponent() {
                     Reply
                   </MessageBoardButton>
                 ) : (
-                  <span>{item.replies.length} Comments</span>
+                  <span className="app__content__message__boards__buttons-c__comments">{item.replies.length} Comments</span>
                 )}
                 <MessageBoardButton
                   data-tip={
@@ -220,6 +224,7 @@ function ContentComponent() {
                     (!signedIn && signedInUser.author.length === 0) ||
                     (signedIn && signedInUser?.author !== item.author)
                   }
+                  className="app__content__message__boards__buttons-c__edit-button"
                   onClick={() => handleEditThreadClick(item)}
                 >
                   Edit Thread
@@ -236,6 +241,7 @@ function ContentComponent() {
                     (!signedIn && signedInUser.author.length === 0) ||
                     (signedIn && signedInUser?.author !== item.author)
                   }
+                  className="app__content__message__boards__buttons-c__delete-button"
                   onClick={() => handleDeleteThreadClick(item)}
                 >
                   Delete Thread

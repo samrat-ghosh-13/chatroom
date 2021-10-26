@@ -124,45 +124,55 @@ const SigninComponent = () => {
   };
 
   return (
-    <Signin>
+    <Signin className="signin">
       {signedIn ? (
-        <SigninContainer>
-          <SignedInMessage>You are already signed in</SignedInMessage>
+        <SigninContainer className="signin__c">
+          <SignedInMessage className="signin__c__message">
+            You are already signed in
+          </SignedInMessage>
           <ButtonComponent
             type="cancel"
             label="Sign Out"
+            className="signin__c__sign-out"
             handleClick={() => debounce(handleSignOut(), 500)}
           >
             <span>Sign Out</span>
           </ButtonComponent>
         </SigninContainer>
       ) : (
-        <SigninContainer>
-          <Email>
-            <label htmlFor="email">Email:</label>
+        <SigninContainer className="signin__c">
+          <Email className="signin__c__email">
+            <label htmlFor="email" className="signin__c__email__label">
+              Email:
+            </label>
             <input
               id="email"
               name="email"
               type="email"
               value={email}
               placeholder="Enter email"
+              className="signin__c__email__input"
               onChange={(e) => setEmail(e.target.value)}
             ></input>
           </Email>
-          <Password>
-            <label htmlFor="reply">Password:</label>
+          <Password className="signin__c__password">
+            <label htmlFor="password" className="signin__c__password__label">
+              Password:
+            </label>
             <input
               id="password"
               name="password"
               type="password"
               value={password}
               placeholder="Enter password"
+              className="signin__c__password__input"
               onChange={(e) => setPassword(e.target.value)}
             ></input>
           </Password>
           <ButtonComponent
             type="check"
             label="Submit"
+            className="signin__c__submit"
             disabled={email.length === 0 || password.length === 0}
             handleClick={() => debounce(handleSubmit(), 500)}
           >

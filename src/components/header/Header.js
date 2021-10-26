@@ -95,7 +95,7 @@ const HeaderComponent = () => {
           >
             <p className="app__header__contents__left__text">Message Boards</p>
           </ContentsLeft>
-          <ContentsRight>
+          <ContentsRight className="app__header__contents__right">
             {signedIn ? (
               <ButtonComponent
                 type="cancel"
