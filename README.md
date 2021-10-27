@@ -15,7 +15,7 @@ The challenge was quite exciting because of the following reasons
 - Cypress
 - Fetch API
 - The web uses are very trivial signin/register functionality to demonstrate the ability to post/edit/reply to threads based on the user
-- GitHub Actions for running the test cases post commit on "main" branch
+- GitHub Actions for running the test cases post commit on "main" branch (https://github.com/samrat-ghosh-13/chatroom/actions)
 - Deployment using vercel at https://chatroom-tau.vercel.app/ (using deploy branch - https://github.com/samrat-ghosh-13/chatroom/tree/deploy) and fake JSON Server is hosted at "https://my-json-server.typicode.com/samrat-ghosh-13/json-server/". Use any user from db.json file, the changes are not persisted as JSON Server cannot accomodate that
 
 In the project directory, you can run:
