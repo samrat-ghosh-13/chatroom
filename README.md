@@ -1,12 +1,5 @@
 # Message Board Application
 
-## Experience
-
-The challenge was quite exciting because of the following reasons
-- Using redux toolkit for the second time (first time - https://github.com/samrat-ghosh-13/image-approval-application/, I was aware of flux pattern and used the same in Vue with Vuex. Previously worked with context API.
-- Using styled components for the second time, previously worked with CSS, SCSS. Really liked the CSS in JS solution, my new favorite.
-- Using Fake JSON Server to fetch Data.
-
 ## Tech Stack
 
 - React
